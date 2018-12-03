@@ -1,22 +1,30 @@
 <template>
   <div id="app" class="container">
-    <div id="btnAdd" class="card padding" @click="modal = true">
-      <p class="second semibold">hey! Cuentanos que ha pasado</p>
-    </div>
     <Form id="add" v-if="modal"/>
-    <Table class="tables"/>
+
+    <div id="conts">
+      <div id="btnAdd" class="card padding" @click="modal = true">
+        <p class="second semibold">hey! Cuentanos que ha pasado</p>
+      </div>
+      
+      <Table class="tables"/>
+    </div>
+
+    <Menu id="Menu"/>
   </div>
 </template>
 
 <script>
 import Form from './components/Form'
 import Table from './components/Table'
+import Menu from './components/Menu'
 import { bus } from './main'
 export default {
   name: 'App',
   components: {
     Form,
-    Table
+    Table,
+    Menu
   },
   data(){
     return{
@@ -52,10 +60,10 @@ textarea{
     font-size: 14px
 }
 .card{
-  border-radius: 4px;
+  border-radius: 0px;
   margin-bottom: 1rem;
   background-color: #fff;
-  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.14);
+  box-shadow: 0 1px 4px 0 rgba(0,0,0,0.2);
 }
 .container{
   display: grid;
@@ -108,9 +116,9 @@ textarea{
 }
 
 
-.tables, #btnAdd{
-  grid-column-start: 2;
-  grid-column-end: 3;
+#conts{
+  grid-column-start: 4;
+  grid-column-end: 5;
   justify-content: center;
 }
 #add{
@@ -118,26 +126,43 @@ textarea{
   width: 100%;
   height: 100vh
 }
+#Menu{
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  justify-content: center;
+}
 
 
 /*S-small*/
 @media screen and (max-width: 575px){
   #app{
-    grid-template-columns: 0.5rem auto 0.5rem;
+    grid-template-columns: 0.5rem 0 0 auto 0.5rem;
   }
 }
 
 /*small*/
 @media screen and (min-width: 576px){
   #app{
-    grid-template-columns: auto 30rem auto
+    grid-template-columns: auto 0 0 30rem auto
   }
 }
 /*middle*/
-@media screen and (min-width: 768px){
+@media screen and (min-width: 768px){ 
+  #app{
+    grid-template-columns: auto 15rem 1rem 28rem auto
+  }
 }
 
 /*large*/
 @media screen and (min-width: 1024px){
+}
+
+/*middle*/
+@media screen and (max-width: 767px){ 
+  #menu{
+    display: none;
+  }
 }
 </style>

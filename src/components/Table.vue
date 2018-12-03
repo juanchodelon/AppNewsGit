@@ -19,6 +19,7 @@
 
 var moment = require('moment');
 import {newsRef} from '../config'
+import { bus } from '../main';
 export default {
     name: 'Table',
     firebase:{
@@ -29,7 +30,16 @@ export default {
             moment: moment,
             search: '',
             categoria: '',
+            posts: [],
         }
+    },
+    created(){
+        bus.$on('categoria', data => {
+			this.categoria = data;
+        });
+        bus.$on('busqueda', data => {
+			this.search = data;
+        });
     },
     computed:{
         filter: function(){
@@ -39,7 +49,7 @@ export default {
                 return this.Items.reverse().filter((I) => I.content.match(this.search)); 
             }
         }
-    }
+    },
 }
 </script>
 
