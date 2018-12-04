@@ -1,26 +1,21 @@
 <template>
     <div>
-        <div id="searchBar" class="card">
-            <input type="search" v-model="busqueda" placeholder="Buscar">
-        </div>
-        <div id="menu" class="card">
+        <div id="back" class=""></div>
+        <div id="Mmenu" class="card">
             <h3 class="semibold cat Mheader">Categorias</h3>
             <ul>
                 <li class="semibold cat btn" @click="categoria = c.value"  v-for="c in categorias" v-bind:key="c.id">{{c.title}}</li>
             </ul>
         </div>
-
     </div>
 </template>
 
 <script>
 import { bus } from '../main';
-import { functions } from 'firebase';
 export default {
     data(){
         return{
             categoria: '',
-            busqueda: '',
             categorias:[
                 { title: 'Todo', value: ''},
                 { title: 'Nacionales', value: 'Nacional'},
@@ -36,35 +31,36 @@ export default {
     },
     watch: {
         categoria: function(){ bus.$emit('categoria', this.categoria); },
-        busqueda: function(){bus.$emit('busqueda', this.busqueda); },
     }
 }
 </script>
 
-<style scoped>
-
-#menu li{
-    padding: 1rem 2rem;
+ <style scoped>
+ #Mmenu{
+     position: fixed;
+     top: 0;
+     bottom: 2rem;
+     left: 0;
+     overflow: auto;
+ }
+ #Mmenu li{
+    padding: 1rem 5rem;
 }
-#menu li:hover{
+#Mmenu li:hover{
     background-color: #eee;
 }
-#menu .Mheader{
+#Mmenu .Mheader{
     padding: 1rem 2rem;
     background-color: #2196f3;
     color: #fff;
 }
-#searchBar input{
-    width: 100%;
-    padding: 1rem;
-    font-size: 14px;
-    border: none;
+#back{
+    background-color: rgba(0,0,0,0.2);
+     position: fixed;
+     top: 0;
+     bottom: 0;
+     right: 0;
+     left: 0;
 }
-@media screen and (max-width: 767px){ 
-  #searchBar input{
-    display: none;
-  }
-}
-</style>
-
-
+ </style>
+ 

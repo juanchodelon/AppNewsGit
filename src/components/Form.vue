@@ -12,6 +12,7 @@
                         </span>
                         
                     </div>
+                    <div id="backDP" @click="drmenu = false" v-if="drmenu"></div>
                     <div id="dropdown" class="card" v-if="drmenu">
                         <ul @click="drmenu = false" >
                             <li class="semibold cat btn" @click="newItem.categoria = c"  v-for="c in categorias" v-bind:key="c.id">{{c}}</li>
@@ -48,13 +49,16 @@ export default {
                 img: false,
                 date: Date.now(),
             },
-            categorias:["Nacional","Internacional","Deportes","clasificados","Cultura","Otros"],
+            categorias:["Nacional","Internacional","Deportes","Politica","Clasificados","Cultura","Anuncios","Varios"],
             drmenu: false,
             modal: false,
         }
     },
     methods:{
         cancel: function(){ bus.$emit('modal', false ); },
+        dropdown: function(){
+            drmenu = !drmenu;
+        },
         agregar: function(){
             this.cancel();
             if(this.file == null){
@@ -119,9 +123,9 @@ export default {
     float: right;
 }
 #dropdown{
-    position: absolute;
     border: solid 1px #ccc;
     z-index: 1040;
+    overflow: auto;
 }
 #dropdown li{
     padding: 1rem 2rem;
@@ -162,11 +166,37 @@ textarea{
     grid-template-columns: 0.5rem auto 0.5rem;
     grid-template-rows: 1rem 21rem auto;
   }
+  #dropdown{
+    position: fixed;
+    bottom: 3rem;
+    left: 0;
+    right: 0;
+    margin: 0;
+    top: 50vh;
+  }
+  #backDP{
+    background-color: rgba(0,0,0,0.2);
+    z-index: 1050;
+    position: fixed;
+    bottom: 50vh;
+    left: 0;
+    right: 0;
+    margin: 0;
+    top: 0;
+  }
 }
 @media screen and (min-width: 576px){
   .container{
     grid-template-columns: auto 30rem auto;
     grid-template-rows: 1rem 21rem auto;
+  }
+  #dropdown{
+    position: absolute;
+    width: 28rem;
+    max-height: 15rem;
+  }
+  #backDP{
+    display: none;
   }
 }
 /*middle*/

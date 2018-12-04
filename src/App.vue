@@ -11,6 +11,9 @@
     </div>
 
     <Menu id="Menu"/>
+    <Mmobil id="Mmobil" v-if="Mmenu"/>
+    <Smobil id="Smobil" v-if="Sbar"/>
+    <Hmobil id="Hmobil"/>
   </div>
 </template>
 
@@ -18,22 +21,36 @@
 import Form from './components/Form'
 import Table from './components/Table'
 import Menu from './components/Menu'
+import Hmobil from './components/headerMobil'
+import Mmobil from './components/menumobil'
+import Smobil from './components/searchbarmobil'
 import { bus } from './main'
 export default {
   name: 'App',
   components: {
     Form,
     Table,
-    Menu
+    Menu,
+    Hmobil,
+    Mmobil,
+    Smobil
   },
   data(){
     return{
       modal: false,
+      Mmenu: false,
+      Sbar: false,
     }
   },
   created(){
     bus.$on('modal', data => {
 			this.modal = data;
+    });
+    bus.$on('Mmenu', data => {
+			this.Mmenu = data;
+    });
+    bus.$on('searchB', data => {
+			this.Sbar = data;
 		});
   }
 }
@@ -52,7 +69,7 @@ body{
     background-color: #eee;
 }
 #app{
-  padding-top: 2rem;
+  padding-top: 0.5rem;
 }
 textarea{
     resize: none;
@@ -135,34 +152,46 @@ textarea{
 }
 
 
+/*small*/
+@media screen and (min-width: 576px){
+  #app{
+    grid-template-columns: auto 0 0 30rem auto;
+  }
+}
+/*middle*/
+@media screen and (min-width: 768px){ 
+  #app{
+    grid-template-columns: auto 15rem 1rem 28rem auto;
+    padding-top: 1rem;
+  }
+  #Hmobil{
+    display: none;
+  }
+  #Mmobil{
+    display: none;
+  }
+  
+}
+/*large*/
+@media screen and (min-width: 1024px){
+}
+
 /*S-small*/
 @media screen and (max-width: 575px){
   #app{
     grid-template-columns: 0.5rem 0 0 auto 0.5rem;
   }
 }
-
-/*small*/
-@media screen and (min-width: 576px){
-  #app{
-    grid-template-columns: auto 0 0 30rem auto
-  }
-}
-/*middle*/
-@media screen and (min-width: 768px){ 
-  #app{
-    grid-template-columns: auto 15rem 1rem 28rem auto
-  }
-}
-
-/*large*/
-@media screen and (min-width: 1024px){
-}
-
 /*middle*/
 @media screen and (max-width: 767px){ 
   #menu{
     display: none;
+  }
+  #btnAdd{
+    display: none;
+  }
+  #app{
+    margin-bottom: 3rem;
   }
 }
 </style>
