@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div id="back" class=""></div>
+        <div id="back" class="" @click="cancel"></div>
         <div id="Mmenu" class="card">
             <h3 class="semibold cat Mheader">Categorias</h3>
             <ul>
@@ -12,6 +12,7 @@
 
 <script>
 import { bus } from '../main';
+import { functions } from 'firebase';
 export default {
     data(){
         return{
@@ -31,6 +32,11 @@ export default {
     },
     watch: {
         categoria: function(){ bus.$emit('categoria', this.categoria); },
+    },
+    methods:{
+        cancel: function(){
+            bus.$emit('Mmenu', false);
+        }
     }
 }
 </script>

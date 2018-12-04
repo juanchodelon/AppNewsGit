@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div id="back"></div>
+        
         <div id="searchBar" class="card">
             <input type="search" v-model="busqueda" placeholder="Buscar">
         </div>
@@ -17,6 +17,11 @@ export default {
     },
     watch: {
         busqueda: function(){bus.$emit('busqueda', this.busqueda); },
+    },
+    methods:{
+        cancel: function(){
+            bus.$emit('searchB', false);
+        }
     }
 }
 </script>

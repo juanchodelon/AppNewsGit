@@ -1,36 +1,43 @@
 <template>
 <div>
     <div>
-        <div id="back" class="full fixed"></div>
-        <div class="container fixed full">
-            <form class="card" id="form">
-                <div class="Fbody padding">
+        <div class="cform fixed">
+            <form class="card container" id="form">
+
+                <div class="Fheader" >
                     <div class="btn Mpadding semibold cat inline"> 
                         <span>Categoria:</span>
                         <span @click="drmenu = !drmenu" id="select" class="inline">
                             {{newItem.categoria}}<i class="material-icons a">expand_more</i>
                         </span>
-                        
                     </div>
+                </div>
+                    <!--drmenu-->
                     <div id="backDP" @click="drmenu = false" v-if="drmenu"></div>
                     <div id="dropdown" class="card" v-if="drmenu">
                         <ul @click="drmenu = false" >
                             <li class="semibold cat btn" @click="newItem.categoria = c"  v-for="c in categorias" v-bind:key="c.id">{{c}}</li>
                         </ul>
                     </div>
+
+                <div class="Fbody padding">
                     <textarea placeholder="hey! Cuentanos que ha pasado" rows="8" v-model="newItem.content"></textarea>
                     <div id="Finput" class="inline">
                         <i class="material-icons cat btn">insert_photo</i>
-                        <input type="file" name="imgContent" @change="onFileSelected" id="input" class="btn Mpadding">
+                        <input type="file" name="imgContent" @change="onFileSelected" id="input" class="btn">
                     </div>
                     <tr></tr>
-                    <div class="Ffooter inline">
-                        <button class="btn Mpadding bold" id="cancelar" @click.prevent="cancel">CANCELAR</button>
-                        <button class="btn Mpadding bold" id="publicar" @click.prevent="agregar">PUBLICAR</button>
-                    </div>
                 </div>
+
+                <div class="Ffooter">
+                    <button class="btn Mpadding bold" id="cancelar" @click.prevent="cancel">CANCELAR</button>
+                    <button class="btn Mpadding bold" id="publicar" @click.prevent="agregar">PUBLICAR</button>
+                </div>
+
             </form>
         </div>
+        
+        <div id="back" class="full fixed" @click="cancel"></div>
     </div>
 </div>
 </template>
@@ -105,23 +112,41 @@ export default {
     background-color: rgba(0,0,0,0.2);
     z-index: 1000;
 }
-.container{
-    grid-template-columns: auto auto auto;
+.cform{
     z-index: 1010;
 }
-#form{
-    grid-column-start: 2;
-    grid-column-end: 3;
-    grid-row-start: 2;
-    grid-row-end: 3;
+.container{
+    grid-template-rows: auto auto auto;
 }
-#select{
-    color: #03a9f4;
-    margin-bottom: 0.5rem;
+textarea{
+    width: 100%;
 }
 .Ffooter{
-    float: right;
+    display: grid;
+    grid-template-columns: auto auto;
 }
+#input{
+    width: 2rem;
+    opacity: 0;
+}
+#Finput{
+    height: 30px;
+    color: #fff;
+}
+#Finput i{
+    position: absolute;
+    font-size: 30px;
+}
+#publicar{
+    color: #2196f3;
+}
+#cancelar{
+    color: #f44336;
+}
+.a{
+    transform: translateY(6px);
+}
+
 #dropdown{
     border: solid 1px #ccc;
     z-index: 1040;
@@ -134,77 +159,70 @@ export default {
 #dropdown li:hover{
     background-color: #eee;
 }
-#input{
-    width: 1.2rem;
-    opacity: 0;
-}
-#Finput{
-    height: 40px;
-    color: #fff;
-}
-#Finput i{
-    position: absolute;
-    font-size: 30px;
-}
-textarea{
-    width: 96%;
-    padding: 2%;
-}
-#publicar{
-    color: #2196f3;
-    border: solid 2px #2196f3;
-    border-radius: 4px;
-}
-#cancelar{
-    color: #f44336;
-}
-.a{
-    transform: translateY(6px);
-}
 @media screen and (max-width: 575px){
-  .container{
-    grid-template-columns: 0.5rem auto 0.5rem;
-    grid-template-rows: 1rem 21rem auto;
-  }
-  #dropdown{
-    position: fixed;
-    bottom: 3rem;
-    left: 0;
-    right: 0;
-    margin: 0;
-    top: 50vh;
-  }
-  #backDP{
-    background-color: rgba(0,0,0,0.2);
-    z-index: 1050;
-    position: fixed;
-    bottom: 50vh;
-    left: 0;
-    right: 0;
-    margin: 0;
-    top: 0;
-  }
 }
 @media screen and (min-width: 576px){
-  .container{
-    grid-template-columns: auto 30rem auto;
-    grid-template-rows: 1rem 21rem auto;
-  }
-  #dropdown{
-    position: absolute;
-    width: 28rem;
-    max-height: 15rem;
-  }
-  #backDP{
-    display: none;
-  }
 }
+
 /*middle*/
 @media screen and (min-width: 768px){
-.container{
-    grid-template-columns: auto 30rem auto;
-    grid-template-rows: 6rem 21rem auto;
-  }
+    .cform{
+        position: fixed;
+        width: 30rem;
+        left: 50%;
+        top: 0rem;
+        transform: translateX(-50%);
+    }
+    #dropdown{
+        position: fixed;
+        width: 28rem;
+        left: 50%;
+        top: 3rem;
+        transform: translateX(-50%);
+    }
+    .Ffooter{
+        grid-row-start: 3;
+        grid-row-end: 4;
+        justify-content: end;
+        padding: 0rem 1rem 1rem 1rem;
+    }
+    .cform{
+        top: 4rem;
+    }
+}
+@media screen and (max-width: 767px){
+    .Ffooter{
+        padding: 0;
+        grid-row-start: 1;
+        grid-row-end: 2;
+        justify-content: space-between;
+    }
+    textarea{
+        height: 30vh;
+    }
+    #backDP{
+        background-color: rgba(0,0,0,0.2);
+        z-index: 1050;
+        position: fixed;
+        bottom: 55vh;
+        left: 0;
+        right: 0;
+        margin: 0;
+        top: 0;
+    }
+    .cform{
+        position: fixed;
+        left: 0;
+        right: 0;
+    }
+    #dropdown{
+        position: fixed;
+        bottom: 2rem;
+        top: 45vh;
+        left: 0;
+        right: 0;
+        overflow: auto;
+    }
 }
 </style>
 

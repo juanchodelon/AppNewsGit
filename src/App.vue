@@ -89,7 +89,7 @@ textarea{
   padding: 1rem;
 }
 .Mpadding{
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
 }
 .btn{
   cursor: pointer;
