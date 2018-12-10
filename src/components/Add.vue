@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div id="back" @click="cancel" class="fixed"></div>
+
         <div class="cform fixed">
             <div class="card container" id="form">
 
@@ -13,12 +13,12 @@
                     </div>
                 </div>
 
-                <div id="backDP" @click="drmenu = false" v-if="drmenu"></div>
-                <div id="dropdown" class="card" v-if="drmenu">
-                    <ul @click="drmenu = false" >
-                        <li class="semibold cat btn" @click="newItem.categoria = c"  v-for="c in categorias" v-bind:key="c.id">{{c}}</li>
-                    </ul>
-                </div>
+                    <div id="backDP" @click="drmenu = false" v-if="drmenu"></div>
+                    <div id="dropdown" class="card" v-if="drmenu">
+                        <ul @click="drmenu = false" >
+                            <li class="semibold cat btn" @click="newItem.categoria = c"  v-for="c in categorias" v-bind:key="c.id">{{c}}</li>
+                        </ul>
+                    </div>
 
                 <div class="Fbody padding">
                     <textarea placeholder="hey! Cuentanos que ha pasado" rows="8" v-model="newItem.content"></textarea>
@@ -28,29 +28,24 @@
                     </div>
                     <tr></tr>
                 </div>
-                <div id="captcha">
-                    <vue-recaptcha class="inline"
-                            :sitekey="sitekey"
-                            @verify="onVerify">
-                    </vue-recaptcha>
-                </div>
 
                 <div class="Ffooter">
                     <button class="btn Mpadding bold" id="cancelar" @click.prevent="cancel">CANCELAR</button>
-                    <button class="btn Mpadding bold" id="publicar" v-if="cap" @click.prevent="agregar">PUBLICAR</button>
+                    <button class="btn Mpadding bold" id="publicar" @click.prevent="agregar">PUBLICAR</button>
+                    <div class="g-recaptcha" data-sitekey="6LcvMzQUAAAAAPo1lL1lm43y2OweJKByYbWkoLTz"></div>
                 </div>
 
             </div>
         </div>
+
     </div>
 </template>
 
 <script>
-import VueRecaptcha from 'vue-recaptcha';
+import VueRecaptcha from 'vue-grecaptcha'
 import {newsRef, fire} from '../config'
 import {bus} from '../main'
 export default {
-    components: { VueRecaptcha },
     name: 'Add',
     data(){
         return{
@@ -64,25 +59,21 @@ export default {
             categorias:["Nacional","Internacional","Deportes","Politica","Clasificados","Cultura","Anuncios","Varios"],
             drmenu: false,
             modal: false,
-            cap: false,
-            sitekey: '6LcvMzQUAAAAAPo1lL1lm43y2OweJKByYbWkoLTz',
         }
     },
     methods:{
-        cancel: function(){
-             bus.$emit('modal', false ); 
+        callback: function (response) {
+          console.log(response);
         },
-        onVerify: function (response) {
-            if(response != ' '){
-                this.cap = true
-            }
-        },
+        cancel: function(){ bus.$emit('modal', false ); },
         dropdown: function(){
             drmenu = !drmenu;
         },
+        onSubmit: function(token) {
+          console.log('success!');
+        },
         agregar: function(){
-            this.cap = false;
-            this.cancel();
+            /*this.cancel();
             if(this.file == null){
                     this.publicar();
             }
@@ -94,7 +85,7 @@ export default {
                         this.getUrl()
                     }
                 })
-            }
+            } */
         },
         getUrl(){
             var starsRef = fire.storage().ref('photos/'+ this.file.name);
@@ -127,21 +118,14 @@ export default {
     background-color: rgba(0,0,0,0.2);
     z-index: 1000;
 }
-#captcha{
-    justify-self: center;
-}
 .cform{
     z-index: 1010;
-}
-#form{
-    overflow: auto;
 }
 .container{
     grid-template-rows: auto auto auto;
 }
 textarea{
-    width: 96%;
-    padding: 2%;
+    width: 100%;
 }
 .Ffooter{
     display: grid;
@@ -181,13 +165,9 @@ textarea{
 #dropdown li:hover{
     background-color: #eee;
 }
-#back{
-    background-color: rgba(0,0,0,0.2);
-     position: fixed;
-     top: 0;
-     bottom: 0;
-     right: 0;
-     left: 0;
+@media screen and (max-width: 575px){
+}
+@media screen and (min-width: 576px){
 }
 
 /*middle*/
@@ -207,8 +187,8 @@ textarea{
         transform: translateX(-50%);
     }
     .Ffooter{
-        grid-row-start: 4;
-        grid-row-end: 5;
+        grid-row-start: 3;
+        grid-row-end: 4;
         justify-content: end;
         padding: 0rem 1rem 1rem 1rem;
     }

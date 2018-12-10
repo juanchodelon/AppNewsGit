@@ -1,15 +1,14 @@
 <template>
   <div id="app" class="container">
+    
     <Form id="add" v-if="modal"/>
 
     <div id="conts">
       <div id="btnAdd" class="card padding" @click="modal = true">
         <p class="second semibold">hey! Cuentanos que ha pasado</p>
       </div>
-      
       <Table class="tables"/>
     </div>
-
     <Menu id="Menu"/>
     <Mmobil id="Mmobil" v-if="Mmenu"/>
     <Smobil id="Smobil" v-if="Sbar"/>
@@ -19,6 +18,7 @@
 
 <script>
 import Form from './components/Form'
+import Add from './components/Add'
 import Table from './components/Table'
 import Menu from './components/Menu'
 import Hmobil from './components/headerMobil'
@@ -33,7 +33,8 @@ export default {
     Menu,
     Hmobil,
     Mmobil,
-    Smobil
+    Smobil,
+    Add
   },
   data(){
     return{
@@ -52,7 +53,8 @@ export default {
     bus.$on('searchB', data => {
 			this.Sbar = data;
 		});
-  }
+  },
+  
 }
 </script>
 
